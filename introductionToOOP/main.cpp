@@ -1,15 +1,24 @@
-#include <iostream>
-using std::cout;
-using std::cin;
-using std::endl;
+﻿#include <iostream>
 
-//#define STRUCT_POINT
+
+using namespace std;
+
+double distance(class Point A);
 
 class Point
 {
 	double x;
 	double y;
 public:
+
+	double distance_x() const
+	{
+		return x;
+	}
+	double distance_y() const
+	{
+		return y;
+	}
 
 	void set_x(double x)
 	{
@@ -19,40 +28,33 @@ public:
 	{
 		this->y = y;
 	}
-
-	double get_x() const
-	{
-		return x;
-	}
-	double get_y() const
-	{
-		return y;
-	}
-
-
+	
 };
 
 void main()
 {
 	setlocale(LC_ALL, "");
-	
-#ifdef STRUCT_POINT
-	Point A;
-	
-	A.x = 2;
-	A.y = 5;
-
-	cout << "x = " << A.x << " y = " << A.y << endl;
-
-	Point* pa = &A;
-	cout << pa->x << "\t" << pa->y << endl;
-#endif // STRUCT_POINT
-
 
 	Point A;
-	A.set_x(6);
-	A.set_y(4);
 
-	cout << A.get_x() << "\t" << A.get_y() << endl;
 
+	double z, c;
+	cout << "растояние x - "; cin >> z;
+	cout << "растояние y - "; cin >> c;
+
+	A.set_x(z);
+	A.set_y(c);
+
+	cout << "расстояние до точки x =: " << A.distance_x() << endl;
+	cout << "расстояние до точки y =: " << A.distance_y() << endl;
+	cout << "расстояние между точкой x и точкой y =: " << distance(A) << endl;
+
+}
+
+double distance(class Point A)
+{
+	double c = 0;
+	c = max(A.distance_x(), A.distance_y()) - min(A.distance_x(), A.distance_y());
+
+	return c;
 }
