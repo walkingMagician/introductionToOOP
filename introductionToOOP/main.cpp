@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 
-
+using std::cout;
 using namespace std;
 
 class Point
@@ -26,7 +26,7 @@ public:
 	{
 		this->y = y;
 	}
-	// конструкторы
+	// construction
 	
 	/*Point()
 	{
@@ -57,9 +57,9 @@ public:
 	{
 		cout << "destructor:\t" << this << endl;
 	}
-	// операторы 
+	// operator 
 
-	Point operator=(const Point& other)
+	Point& operator=(const Point& other)
 	{
 		this->x = other.x;
 		this->y = other.y;
@@ -67,8 +67,30 @@ public:
 		return *this;
 	}
 
-	// математика
-	double distance(const Point other)const
+	Point& operator++() // prefix increment
+	{
+		x++;
+		y++;
+		return *this;
+	}
+
+	Point operator++(int) // suffix increment
+	{
+		Point old = *this;
+		x++;
+		y++;
+		return old;
+	}
+
+	Point& operator()(double x, double y)
+	{
+		set_x(x);
+		set_y(y);
+		return *this;
+	}
+
+	// methods
+	double distance(const Point& other)const
 	{
 		double x_distance = this->x - other.x;
 		double y_distance = this->y - other.y;
@@ -83,7 +105,7 @@ public:
 
 };
 
-double distance(Point A, Point B)
+double distance( Point& A, Point& B)
 {
 	double x_distance = A.get_x() - B.get_x();
 	double y_distance = A.get_y() - B.get_y();
@@ -91,18 +113,50 @@ double distance(Point A, Point B)
 	return distance;
 }
 
+Point operator+(Point& left,  Point& right)
+{
+	Point result;
+	result.set_x(left.get_x() + right.get_x());
+	result.set_y(left.get_y() + right.get_y());
+	return result;
+}
+
+bool operator==(Point& left, Point& right)
+{
+	/*if (left.get_x() == right.get_x() && left.get_y() == right.get_y())
+		return true;
+	else
+		return false;*/
+	return left.get_x() == right.get_x() && left.get_y() == right.get_y();
+}
+
+std::ostream& operator<<(std::ostream& os, Point& obj)
+{
+	return os << "X = " << obj.get_x() << "\tY = " << obj.get_x();
+}
+
+ std::istream& operator>>(std::istream& is, Point& obj)
+{
+	 double x, y;
+	 is >> x >> y;
+	 obj(x, y);
+	 return is;
+}
+
+
 //#define DISTANCE_CHECK
 //#define CONSTRUCTOR_CHECK
+//#define ASSIGNMENT_CHEC
+//#define OPERATORS_CHECK
 
 void main()
 {
 	setlocale(LC_ALL, "");
 
-
+#ifdef ASSIGNMENT_CHEC
 	Point A, B, C;
 	A = B = C = Point(2, 3);
-	
-
+#endif // ASSIGNMENT_CHEC
 
 #ifdef DISTANCE_CHECK
 
@@ -140,4 +194,27 @@ void main()
 	D.print();
 
 #endif // CONSTRUCTOR_CHECK
+
+#ifdef OPERATORS_CHECK
+	Point A(2, 3);
+	Point B(7, 8);
+	Point C = A + B;
+	A.print();
+	B.print();
+	C.print();
+	Point D = C++;
+	D.print();
+	C.print();
+	
+	cout << (C == D) << endl;
+#endif // OPERATORS_CHECK
+
+	Point A(2, 3);
+	cout << "Введите кординаты точки:"; cin >> A;
+
+
+	cout << A << endl;
+	
+
+
 }
