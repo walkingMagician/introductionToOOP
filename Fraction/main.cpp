@@ -122,9 +122,9 @@ public:
 
 	// Methods
 
-	int comparison(const Fraction& other)
+	int comparison()
 	{
-		return get_numerator() * other.get_denominator() - get_denominator() * other.get_numerator();
+		return get_integer() * get_denominator() - get_denominator() + get_numerator();
 	}
 
 	void print() const
@@ -141,7 +141,7 @@ public:
 	}
 };
 
-bool operator== (const Fraction& left, const Fraction& right)
+bool operator== (const Fraction& left, const Fraction& right) 
 {
 	return left.get_integer() == right.get_integer() && left.get_numerator() == right.get_numerator() && left.get_denominator() == right.get_denominator();
 }
@@ -151,38 +151,84 @@ bool operator!= (const Fraction& left, const Fraction& right)
 	return left.get_integer() != right.get_integer() || left.get_numerator() != right.get_numerator() || left.get_denominator() != right.get_denominator();
 }
 
-bool operator< (Fraction& left, Fraction& right) { return left.comparison(right) < 0; }
-bool operator> (Fraction& left, Fraction& right) { return left.comparison(right) > 0; }
-bool operator<= (Fraction& left, Fraction& right) { return left.comparison(right) <= 0; }
-bool operator>= (Fraction& left, Fraction& right) { return left.comparison(right) >= 0; }
+bool operator< (Fraction& left, Fraction& right) { return left.comparison() < right.comparison(); }
+bool operator> (Fraction& left, Fraction& right) { return left.comparison() > right.comparison(); }
+bool operator<= (Fraction& left, Fraction& right) { return left.comparison() <= right.comparison(); }
+bool operator>= (Fraction& left, Fraction& right) { return left.comparison() >= right.comparison(); }
 
 Fraction operator*(const Fraction& left, const Fraction& right)
 {
-	return Fraction(left.get_numerator() * right.get_numerator(), left.get_denominator() * right.get_denominator());
+	Fraction result;
+
+	result.set_numerator((left.get_integer() * left.get_denominator() + left.get_numerator()) * (right.get_integer() * right.get_denominator() + right.get_numerator()));
+	result.set_denominator(left.get_denominator() * right.get_denominator());
+
+	return result;
 }
 
 Fraction operator/(const Fraction& left, const Fraction& right)
 {
-	return Fraction(left.get_numerator() * right.get_denominator(), left.get_denominator() * right.get_numerator());
+	Fraction result;
+	
+	result.set_numerator((left.get_integer() * left.get_denominator() + left.get_numerator()) * right.get_denominator());
+	result.set_denominator((right.get_integer() * right.get_denominator() + right.get_numerator()) * left.get_denominator());
+
+	return result;
+
+	//return Fraction(left.get_numerator() * right.get_denominator(), left.get_denominator() * right.get_numerator());
 }
 
 Fraction operator+(const Fraction& left, const Fraction& right)
 {
-	int denominator = left.get_denominator() * right.get_denominator();
-	int numenator = left.get_numerator() * right.get_denominator() + left.get_denominator() * right.get_numerator();
-	return Fraction(numenator, denominator);
+	Fraction result;
+	//result.set_integer(left.get_integer() + right.get_integer());
+	//result.set_numerator(left.get_numerator() + right.get_numerator());
+	//result.set_denominator(left.get_denominator() + right.get_denominator());
+	
+	if (left.get_denominator() == right.get_denominator())
+	{
+		result.set_numerator((left.get_integer() * left.get_denominator() + left.get_numerator()) + (right.get_integer() * right.get_denominator() + right.get_numerator()));
+		result.set_denominator(left.get_denominator());
+	}else {
+		result.set_numerator((left.get_integer() * left.get_denominator() + left.get_numerator()) * right.get_denominator() + (right.get_integer() * right.get_denominator() + right.get_numerator()) * left.get_denominator());
+		result.set_denominator(left.get_denominator() * right.get_denominator());
+	}
+	
+	return result;
 }
 
-Fraction operator-(const Fraction& left, const Fraction& right) {
-	int denominator = left.get_denominator() * right.get_denominator();
-	int numenator = left.get_numerator() * right.get_denominator() - left.get_denominator() * right.get_numerator();
-	return Fraction(numenator, denominator);
+Fraction operator-(const Fraction& left, const Fraction& right) 
+{
+	Fraction result;
+	
+	if (left.get_denominator() == right.get_denominator())
+	{
+		result.set_denominator(left.get_denominator());
+		result.set_numerator((left.get_integer() * left.get_denominator() + left.get_numerator()) - (right.get_integer() * right.get_denominator() + right.get_numerator()));
+	}else {
+		result.set_numerator((left.get_integer() * left.get_denominator() + left.get_numerator()) * right.get_denominator() - (right.get_integer() * right.get_denominator() + right.get_numerator()) * left.get_denominator());
+		result.set_denominator(left.get_denominator() * right.get_denominator());
+	}
+
+	return result;
 }
 
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 {
-	return os << obj.get_numerator() << "/" << obj.get_denominator();
+	return os << obj.get_integer() << "(" << obj.get_numerator() << "/" << obj.get_denominator() << ")";
 }
+
+std::istream& operator>>(std::istream& is, Fraction& obj)
+{
+	int integer, numerator, denominator;
+	is >> integer >> numerator >> denominator;
+	obj.set_integer(integer);
+	obj.set_numerator(numerator);
+	obj.set_denominator(denominator);
+	return is;
+}
+
+
 
 //#define ONE_CHECK
 
@@ -211,10 +257,14 @@ void main()
 	F.print();
 #endif
 
-	Fraction A(1, 2);
-	Fraction B(5, 10);
+	Fraction A(4, 8);
+	Fraction B(2, 5, 7);
 	A.print();
 	B.print();
-	Fraction C = A > B;
+	Fraction C = A <= B;
 	C.print();
+	Fraction F;
+	cin >> F;
+	F.print();
+
 }
