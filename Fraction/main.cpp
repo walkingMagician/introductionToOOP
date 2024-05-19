@@ -120,11 +120,22 @@ public:
 		return old;
 	}
 
+	Fraction operator+=(const Fraction& other)
+	{
+		Fraction result = *this;
+
+		result.set_integer(get_integer() + other.get_integer());
+		result.set_numerator(get_numerator() + other.get_numerator());
+		result.set_denominator(get_denominator() + other.get_denominator());
+
+		return result;
+	}
+
 	// Methods
 
 	int comparison()
 	{
-		return get_integer() * get_denominator() - get_denominator() + get_numerator();
+		return get_integer() * get_denominator() + get_numerator();
 	}
 
 	void print() const
@@ -213,6 +224,17 @@ Fraction operator-(const Fraction& left, const Fraction& right)
 	return result;
 }
 
+//Fraction operator+=(const Fraction& left, const Fraction& right)
+//{
+//	Fraction result;
+//
+//	result.set_integer(left.get_integer() + right.get_integer());
+//	result.set_numerator(left.get_numerator() + right.get_numerator());
+//	result.set_denominator(left.get_denominator() + right.get_denominator());
+//
+//	return result;
+//}
+
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 {
 	return os << obj.get_integer() << "(" << obj.get_numerator() << "/" << obj.get_denominator() << ")";
@@ -257,14 +279,15 @@ void main()
 	F.print();
 #endif
 
-	Fraction A(4, 8);
-	Fraction B(2, 5, 7);
+	Fraction A(1, 2);
+	Fraction B(2, 5, 6);
 	A.print();
 	B.print();
 	Fraction C = A <= B;
 	C.print();
-	Fraction F;
-	cin >> F;
+	Fraction F = A += B;
+	//cin >> F;
+	F = F += A;
 	F.print();
 
 }
