@@ -126,7 +126,7 @@ public:
 		return old;
 	}
 
-	Fraction operator*( Fraction& other)
+	Fraction operator*=( Fraction& other)
 	{
 		return *this = *this * other;
 	}
@@ -191,11 +191,6 @@ public:
 		return *this;
 	}
 
-	int comparison()
-	{
-		return get_integer() * get_denominator() - get_denominator() + get_numerator();
-	}
-
 	std::ostream& print(std::ostream& os = std::cout) const
 	{
 		if (integer)os << integer;
@@ -206,8 +201,8 @@ public:
 			if (integer) os << ")";
 		}
 		else if (integer == 0) os << 0;
+		os << endl;
 		return os;
-		
 	}
 };
 
@@ -358,12 +353,11 @@ void main()
 	F.print();
 #endif
 
-	Fraction A(1, 2, 3);
-	Fraction B(2, 4);
+	Fraction A(2, 5);
+	Fraction B(2, 5, 9);
 	A.print();
 	B.print();
-	Fraction C = A + B;
-	cout << C;
+	A += B;
+	cout << A;
 
-	
 }
