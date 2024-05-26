@@ -56,6 +56,18 @@ public:
 		denominator = 1;
 		cout << "1arg Constructor:\t\t" << this << endl;
 	}
+
+	Fraction(double decimal)
+	{
+		decimal += 1e-10;
+		integer = decimal; // сохраняем целую часть 
+		denominator = 1e+9; // 'int' позволяет полноценно использовать только 9 десятичных разрядов
+		decimal -= integer; // убираем целую часть для целой части 
+		numerator = decimal * denominator; 
+		reduce();
+
+	}
+
 	Fraction(int numerator, int denominator)
 	{
 		this->integer = 0;
@@ -148,6 +160,11 @@ public:
 	explicit operator int()
 	{
 		return integer;
+	}
+
+	operator double()
+	{
+		return integer + (double)numerator / denominator;
 	}
 
 	// Methods
@@ -327,6 +344,8 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 }
 
 //#define ONE_CHECK
+//#define TWO_CHECK
+#define HOME_WORK
 
 void main()
 {
@@ -353,11 +372,23 @@ void main()
 	F.print();
 #endif
 
+#ifdef TWO_CHECK
 	Fraction A(2, 5);
 	Fraction B(2, 5, 9);
 	A.print();
 	B.print();
 	A += B;
 	cout << A;
+#endif
+
+#ifdef HOME_WORK
+	cout << INT_MIN << "..." << INT_MAX << endl;
+	Fraction A(2, 3, 4);
+	double a = A;
+	cout << A << " = " << a << endl;
+
+	Fraction B = 2.76;
+	cout << B << endl;
+#endif // HOME_WORK
 
 }
