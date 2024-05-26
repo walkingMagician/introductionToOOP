@@ -45,7 +45,7 @@ public:
 	{
 		this->str = other.str;
 		
-		cout << "Copy Assighment\t\t" << this << endl;
+		cout << "Copy Assighment:\t\t" << this << endl;
 		return *this;
 	}
 
@@ -78,4 +78,9 @@ void main()
 	String C = A + B;
 	cout << C << endl;
 	
+	String str1 = "Hello";
+	String str2 = "World";
+	String str3 = str1 + str2;
+	cout << str3 << endl;
+
 }
