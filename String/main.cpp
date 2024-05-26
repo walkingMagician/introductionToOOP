@@ -53,11 +53,17 @@ public:
 	}
 
 	// methods
-	void print()
+	std::ostream& print(std::ostream& os = std::cout) const
 	{
-		cout << str << endl;
+		os << str << endl;
+		return os;
 	}
 };
+
+std::ostream& operator<<(std::ostream& os, const String& obj)
+{
+	return obj.print(os);
+}
 
 String operator+(String left, String right)
 {
@@ -73,6 +79,6 @@ void main()
 	String B = "world";
 	//B.print();
 	String C = A + B;
-	C.print();
+	cout << C;
 	
 }
