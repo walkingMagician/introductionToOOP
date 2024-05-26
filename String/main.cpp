@@ -9,38 +9,35 @@ class String
 {
 private:
 	string str;
-	//string str1;
 public:
 
 	 //set/get
 	string get_str() { return str; }
-	//string get_str1() { return str1; }
 
 	void set_str(string str) { this->str = str; }
-	//void set_str1(string str1) { this->str1 = str1; }
 
 	// constructor
 	String()
 	{
 		this->str.resize(80);
-		cout << "default constructor" <<"\t\t" << this << endl;
+		cout << "default constructor:" <<"\t\t" << this << endl;
 	}
 
 	String(const char* ch1)
 	{
 		set_str(ch1);
-		cout << "char constructor" << "\t\t" << this << endl;
+		cout << "char constructor:" << "\t\t" << this << endl;
 	}
 
 	String(const String& other)
 	{
 		this->str = other.str;
-		cout << "Copy constructor\t\t" << this << endl;
+		cout << "Copy constructor:" <<"\t\t" << this << endl;
 	}
 
 	~String()
 	{
-		cout << "destructor" << "\t\t" << this << endl;
+		cout << "destructor:" << "\t\t" << this << endl;
 	}
 
 	// operators
@@ -60,12 +57,12 @@ public:
 	}
 };
 
-std::ostream& operator<<(std::ostream& os, const String& obj)
+std::ostream& operator<<(std::ostream& os, const String& obj) 
 {
 	return obj.print(os);
 }
 
-String operator+(String left, String right)
+String operator+(String left, String right) 
 {
 	String result;
 	result.set_str(left.get_str() + right.get_str());
@@ -79,6 +76,6 @@ void main()
 	String B = "world";
 	//B.print();
 	String C = A + B;
-	cout << C;
+	cout << C << endl;
 	
 }
