@@ -35,6 +35,12 @@ public:
 		cout << "Copy constructor:" <<"\t\t" << this << endl;
 	}
 
+	//String(String&& other)
+	//{
+	//	//shallow copy
+
+	//}
+
 	~String()
 	{
 		cout << "destructor:" << "\t\t" << this << endl;
