@@ -368,7 +368,7 @@ void main()
 	E.print();
 
 	Fraction F;
-	F = E;
+	F == E;
 	F.print();
 #endif
 
