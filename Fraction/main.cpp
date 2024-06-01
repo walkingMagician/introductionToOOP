@@ -343,9 +343,9 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 	return is;
 }
 
-//#define ONE_CHECK
+#define ONE_CHECK
 //#define TWO_CHECK
-#define HOME_WORK
+//#define HOME_WORK
 
 void main()
 {
