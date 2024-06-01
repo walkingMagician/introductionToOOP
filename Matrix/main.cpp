@@ -33,6 +33,12 @@ public:
 		cout << "default constructor:\t\t" << this << endl;
 	}
 
+	// bool конструктор
+	Matrix(bool flag) : m(0), n(0), matrix(0)
+	{	
+		cout << flag;
+	}
+
 	// матрица вида n на x, E определяет будет матрица нулевая или еденичная матрица
 	// https://ru.wikipedia.org/wiki/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D0%B4%D0%B8%D0%B0%D0%B3%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C главная диагональ(еденичная матрица)
 	// https://ru.wikipedia.org/wiki/%D0%9D%D1%83%D0%BB%D0%B5%D0%B2%D0%B0%D1%8F_%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0 нулевая матрица
@@ -46,6 +52,7 @@ public:
 		}
 		cout << "two arguments constructor:\t\t" << this << endl;
 	}
+
 
 	Matrix(int M, int N, int array[]) : m(M), n(N)
 	{
@@ -79,7 +86,7 @@ public:
 	// operators
 	double* operator[] (int index) { return get_column(index); }
 
-	Matrix& operator=(const Matrix& other)
+	Matrix& operator= (const Matrix& other)
 	{
 		matrix = new double* [m];
 		for (int i = 0; i < m; ++i)
@@ -102,7 +109,7 @@ public:
 	{
 		for (int i = 0; i < m; i++)
 		{
-			for (int j = 0; j < n; j++) os << matrix[i][j] <<"\t";
+			for (int j = 0; j < n; j++) os << matrix[i][j] << "\t";
 			os << endl;
 		}
 		return os;
@@ -110,15 +117,20 @@ public:
 };
 
 // operators
-std::ostream& operator<<(std::ostream& os, Matrix& obj)
+std::ostream& operator<< (std::ostream& os, const Matrix& obj)
 {
 	return obj.print(os);
 }
 
-bool operator== (Matrix left, Matrix right)
+bool operator== (const Matrix left,const Matrix right)
 {
-	return (left.get_m() == right.get_m() && left.get_n() == right.get_n());
+	return left.get_m() == right.get_m() && left.get_n() == right.get_n();
 }
+bool operator!= (const Matrix& left, const Matrix& reght)
+{
+	return !(left == reght);
+}
+
 
 Matrix operator+ (Matrix& left, Matrix& right)
 {
@@ -171,6 +183,8 @@ int main()
 	Matrix C = B *= A;
 	cout << C << endl;
 
-
+	Matrix D(3, 3);
+	Matrix F = A == D; 
+	cout << endl;
 
 }

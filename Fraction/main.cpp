@@ -189,7 +189,7 @@ public:
 		swap(inverted.numerator, inverted.denominator);
 		return inverted;
 	}
-
+	
 	Fraction& reduce() // алгоритм евклида для сокращения дробейма
 	{
 		int more, less, rest;
@@ -370,6 +370,8 @@ void main()
 	Fraction F;
 	F == E;
 	F.print();
+
+	cout << F << endl;
 #endif
 
 #ifdef TWO_CHECK
