@@ -60,7 +60,7 @@ public:
 		for (int i = 0; i < m; ++i)
 		{
 			matrix[i] = new double[n];
-			for (int j = 0; j < n; ++j) matrix[i][j] = rand() % 10;
+			for (int j = 0; j < n; ++j) matrix[i][j] = array[j] + rand() % 10;
 		}
 		cout << "array arguments constructor:\t\t" << this << endl;
 	}
@@ -122,6 +122,8 @@ std::ostream& operator<< (std::ostream& os, const Matrix& obj)
 	return obj.print(os);
 }
 
+
+
 bool operator== (const Matrix left,const Matrix right)
 {
 	return left.get_m() == right.get_m() && left.get_n() == right.get_n();
@@ -177,14 +179,11 @@ Matrix operator* (Matrix& left, int other)
 
 int main()
 {
-	int array[] = { 0 };
+	int array[] = {4, 3};
 	Matrix A(2, 2, array);
+	cout << A;
 	Matrix B = A;
-	Matrix C = B *= A;
+	Matrix C = B * A;
 	cout << C << endl;
-
-	Matrix D(3, 3);
-	Matrix F = A == D; 
-	cout << endl;
 
 }
