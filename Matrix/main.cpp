@@ -28,6 +28,7 @@ public:
 	void set_n(int n) { this->n = n; }
 
 	// constructor
+
 	Matrix() : matrix(0), m(0), n(0)
 	{
 		cout << "default constructor:\t\t" << this << endl;
@@ -84,6 +85,7 @@ public:
 	}
 
 	// operators
+
 	double* operator[] (int index) { return get_column(index); }
 
 	Matrix& operator= (const Matrix& other)
@@ -103,8 +105,8 @@ public:
 	Matrix operator+= (Matrix& other) { return *this = *this + other; }
 	Matrix operator-= (Matrix& other) { return *this = *this - other; }
 
-
 	// methods
+
 	std::ostream& print(std::ostream& os = std::cout) const
 	{
 		for (int i = 0; i < m; i++)
@@ -117,12 +119,11 @@ public:
 };
 
 // operators
+
 std::ostream& operator<< (std::ostream& os, const Matrix& obj)
 {
 	return obj.print(os);
 }
-
-
 
 bool operator== (const Matrix left,const Matrix right)
 {
@@ -132,7 +133,6 @@ bool operator!= (const Matrix& left, const Matrix& reght)
 {
 	return !(left == reght);
 }
-
 
 Matrix operator+ (Matrix& left, Matrix& right)
 {
